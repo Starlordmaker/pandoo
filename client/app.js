@@ -186,7 +186,7 @@ async function startFlow() {
   catch { toast('📷 Camera/mic permission needed'); return; }
   try { await connect(); }
   catch { toast('Could not reach server. Try again.'); return; }
-  sendMsg({ type: 'join', profile: { ...filters, lang: userLang } });
+  sendMsg({ type: 'join', profile: Object.assign({ ...filters, lang: userLang }, googleProfileExtra()) });
   showFinding();
 }
 function showFinding() {
@@ -376,7 +376,65 @@ function submitReport(reason) {
   closeReport();
   cleanupCall();
   showFinding();
-  sendMsg({ type: 'join', profile: { ...filters, lang: userLang } });
+  sendMsg({ type: 'join', profile: Object.assign({ ...filters, lang: userLang }, googleProfileExtra()) });
+}
+
+/* ---------------- google login ---------------- */
+let googleUser = null;
+function googleProfileExtra() {
+  return googleUser ? { name: googleUser.name, avatar: googleUser.picture } : {};
+}
+async function initGoogleLogin() {
+  let cfg = {};
+  try { cfg = await (await fetch('/api/config')).json(); } catch (e) {}
+  try {
+    const r = await fetch('/api/auth/me');
+    if (r.ok) { googleUser = await r.json(); renderGoogleUser(); }
+  } catch (e) {}
+  const wrap = $('google-btn-wrap'), hint = $('login-hint');
+  if (!cfg.googleClientId) {
+    if (wrap) wrap.style.display = 'none';
+    if (hint) { hint.textContent = '🔑 Google login coming soon'; hint.style.display = 'block'; }
+    return;
+  }
+  let tries = 0;
+  const tick = () => {
+    if (window.google && window.google.accounts) {
+      try {
+        google.accounts.id.initialize({ client_id: cfg.googleClientId, callback: onGoogleCredential, auto_select: false });
+        google.accounts.id.renderButton(wrap, { theme: 'outline', size: 'large', width: 260, text: 'continue_with' });
+      } catch (e) { if (hint) { hint.textContent = 'Google login unavailable'; hint.style.display = 'block'; } }
+    } else if (++tries < 20) setTimeout(tick, 300);
+    else if (hint) { hint.textContent = 'Google login unavailable'; hint.style.display = 'block'; }
+  };
+  tick();
+}
+async function onGoogleCredential(resp) {
+  try {
+    const r = await fetch('/api/auth/google', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ credential: resp.credential }) });
+    if (!r.ok) throw 0;
+    googleUser = await r.json();
+    renderGoogleUser();
+    toast('👋 Welcome, ' + (googleUser.name || 'friend') + '!');
+  } catch (e) { toast('Google login failed. Try again.'); }
+}
+function renderGoogleUser() {
+  const wrap = $('google-btn-wrap'), chip = $('user-chip');
+  if (googleUser) {
+    wrap.style.display = 'none';
+    chip.style.display = 'flex';
+    $('user-avatar').src = googleUser.picture || '';
+    $('user-name').textContent = googleUser.name || 'Friend';
+  } else {
+    wrap.style.display = 'flex';
+    chip.style.display = 'none';
+  }
+}
+async function googleLogout() {
+  try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) {}
+  try { google.accounts.id.disableAutoSelect(); } catch (e) {}
+  googleUser = null;
+  renderGoogleUser();
 }
 
 /* ---------------- wire up ---------------- */
@@ -414,6 +472,8 @@ function init() {
   $('btn-report-cancel').onclick = closeReport;
   document.querySelectorAll('.report-reasons button').forEach(b => b.onclick = () => submitReport(b.dataset.r));
   $('btn-find-new').onclick = startFlow;
+  $('btn-logout').onclick = googleLogout;
+  initGoogleLogin();
   $('btn-home').onclick = () => { stopMedia(); show('screen-home'); };
   // idle online-count fetch (before first socket opens)
   fetch('/health').then(r => r.json()).then(j => { document.querySelectorAll('.online-count').forEach(el => el.textContent = j.online ?? 0); }).catch(() => {});

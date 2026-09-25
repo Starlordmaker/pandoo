@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Pandoo</title>
+<link rel="icon" type="image/png" href="img/pandoo-logo.png">
+<link rel="stylesheet" href="pages.css">
+</head>
+<body>
+<div class="page">
+  <header class="pg-head">
+    <a href="/"><img src="img/pandoo-logo.png" alt="Pandoo"></a>
+    <a class="home" href="/">🏠 Home</a>
+  </header>
+  <main class="pg-body">
+
+<div class="card">
+  <h1>Contact Us</h1>
+  <p class="lead">Questions, feedback, or a bug to report? We'd love to hear from you. 💬</p>
+  <form onsubmit="location.href='mailto:support@pandoo.app?subject='+encodeURIComponent('Pandoo: '+this.sub.value)+'&body='+encodeURIComponent(this.msg.value+'%0A%0A— '+this.nm.value); return false;">
+    <input name="nm" placeholder="Your name" required>
+    <input name="sub" placeholder="Subject" required>
+    <textarea name="msg" rows="5" placeholder="Your message..." required></textarea>
+    <button class="btn" type="submit">SEND ✉</button>
+  </form>
+  <h2>Report abuse</h2>
+  <p>For urgent safety issues, use the <b>Report</b> button inside the app — it's the fastest way. You can also email <b>support@pandoo.app</b>.</p>
+</div>
+  </main>
+  <footer class="pg-foot">
+    <a href="/about.html">About</a> · <a href="/safety.html">Safety</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a>
+    <p>© 2026 Pandoo · 18+ only. Be kind. No nudity, no spam.</p>
+  </footer>
+</div>
+</body>
+</html>

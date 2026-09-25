@@ -29,6 +29,27 @@ allow camera/mic, and the two tabs will match each other.
 > Camera needs a secure context: `localhost` works, but on a LAN IP or
 > production domain you **must use HTTPS** (see Deploy).
 
+## Google login setup (optional)
+
+The "Continue with Google" button stays in "coming soon" mode until you add
+an OAuth Client ID — creating one is free and takes ~5 minutes:
+
+1. Go to **https://console.cloud.google.com/apis/credentials**
+   (log in with your Google account; create a project if asked).
+2. **Create Credentials → OAuth client ID → Web application.**
+3. Under **Authorized JavaScript origins** add:
+   - `http://localhost:3000` (for local testing)
+   - your production domain later (e.g. `https://pandoo.onrender.com`)
+4. Copy the **Client ID** (looks like `xxxx.apps.googleusercontent.com`).
+5. Start the server with it:
+   ```bash
+   GOOGLE_CLIENT_ID="xxxx.apps.googleusercontent.com" npm start
+   ```
+   (On Render/Railway, add `GOOGLE_CLIENT_ID` as an environment variable instead.)
+
+That's it — the button activates automatically, login creates a session
+cookie, and your Google name/photo travel with you into the chat profile.
+
 ## How it works
 
 ```

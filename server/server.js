@@ -10,6 +10,9 @@
  *
  * Run:  npm install && npm start   (or: node server/server.js)
  * Env:  PORT (default 3000)
+ *       GOOGLE_CLIENT_ID (optional — enables Google login; get one at
+ *       https://console.cloud.google.com/apis/credentials -> OAuth client ID.
+ *       Add http://localhost:3000 as an authorized JavaScript origin.)
  *
  * NOTE: This is signaling only. Media goes peer-to-peer via WebRTC.
  * For users behind strict NATs, add a TURN server and point the client
@@ -55,8 +58,80 @@ function serveStatic(req, res) {
   });
 }
 
-const server = http.createServer(serveStatic);
+const server = http.createServer(handleRequest);
 const wss = new WebSocketServer({ server, path: '/ws' });
+
+// ---- Google login (optional) ------------------------------------------------
+let OAuth2Client = null;
+try { OAuth2Client = require('google-auth-library').OAuth2Client; } catch (e) { /* google login disabled */ }
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
+const sessions = new Map(); // sid -> { name, email, picture, sub, createdAt }
+
+function parseCookies(req) {
+  const out = {};
+  (req.headers.cookie || '').split(';').forEach(p => {
+    const i = p.indexOf('=');
+    if (i > 0) out[p.slice(0, i).trim()] = decodeURIComponent(p.slice(i + 1).trim());
+  });
+  return out;
+}
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let b = '';
+    req.on('data', c => { b += c; if (b.length > 1e6) req.destroy(); });
+    req.on('end', () => resolve(b));
+    req.on('error', reject);
+  });
+}
+function json(res, code, obj, headers) {
+  res.writeHead(code, Object.assign({ 'content-type': 'application/json' }, headers || {}));
+  res.end(JSON.stringify(obj));
+}
+
+async function handleApi(req, res) {
+  const urlPath = req.url.split('?')[0];
+  if (urlPath === '/api/config' && req.method === 'GET') {
+    json(res, 200, { googleClientId: GOOGLE_CLIENT_ID || null });
+    return true;
+  }
+  if (urlPath === '/api/auth/me' && req.method === 'GET') {
+    const s = sessions.get(parseCookies(req).pandoo_sid);
+    if (!s) { json(res, 401, { error: 'not logged in' }); return true; }
+    json(res, 200, { name: s.name, email: s.email, picture: s.picture });
+    return true;
+  }
+  if (urlPath === '/api/auth/logout' && req.method === 'POST') {
+    sessions.delete(parseCookies(req).pandoo_sid);
+    json(res, 200, { ok: true }, { 'set-cookie': 'pandoo_sid=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax' });
+    return true;
+  }
+  if (urlPath === '/api/auth/google' && req.method === 'POST') {
+    if (!GOOGLE_CLIENT_ID || !OAuth2Client) { json(res, 501, { error: 'google login not configured' }); return true; }
+    let body;
+    try { body = JSON.parse(await readBody(req)); } catch (e) { json(res, 400, { error: 'bad json' }); return true; }
+    if (!body.credential) { json(res, 400, { error: 'missing credential' }); return true; }
+    try {
+      const ticket = await new OAuth2Client(GOOGLE_CLIENT_ID).verifyIdToken({ idToken: body.credential, audience: GOOGLE_CLIENT_ID });
+      const p = ticket.getPayload();
+      const sid = crypto.randomUUID();
+      sessions.set(sid, { name: p.name, email: p.email, picture: p.picture, sub: p.sub, createdAt: Date.now() });
+      if (sessions.size % 50 === 0) { const t = Date.now(); for (const [k, v] of sessions) if (t - v.createdAt > 30 * 864e5) sessions.delete(k); }
+      json(res, 200, { name: p.name, email: p.email, picture: p.picture },
+        { 'set-cookie': 'pandoo_sid=' + sid + '; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax' });
+    } catch (e) {
+      json(res, 401, { error: 'invalid google credential' });
+    }
+    return true;
+  }
+  return false;
+}
+
+async function handleRequest(req, res) {
+  try {
+    if (await handleApi(req, res)) return;
+  } catch (e) { json(res, 500, { error: 'server error' }); return; }
+  serveStatic(req, res);
+}
 
 // ---- state ------------------------------------------------------------------
 const clients = new Map();   // ws -> { id, profile, roomId, chatTimes:[], lastPartnerId, lastPartnerAt }
@@ -313,5 +388,5 @@ server.on('error', (err) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`stranger-video-chat listening on http://localhost:${PORT}`);
+  console.log(`pandoo listening on http://localhost:${PORT}`);
 });

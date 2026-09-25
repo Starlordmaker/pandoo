@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="img/pandoo-logo.png">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -39,6 +40,15 @@
           <div class="online-pill green"><span class="dot"></span>ONLINE&nbsp;<span class="online-count">0</span></div>
           <button id="btn-filters" class="filter-pill">👥&nbsp;<span id="filters-summary">All</span>&nbsp;▾</button>
           <button id="btn-start" class="start-video-btn">START VIDEO CHAT ▸</button>
+          <div class="login-row">
+            <div id="google-btn-wrap"></div>
+            <div id="user-chip" style="display:none">
+              <img id="user-avatar" alt="">
+              <span id="user-name"></span>
+              <button id="btn-logout" title="Log out">✕</button>
+            </div>
+            <p id="login-hint" style="display:none"></p>
+          </div>
         </div>
       </div>
 
@@ -135,6 +145,13 @@
     <footer class="foot">
      <div class="wrap">
       <div class="socials"><span>📸</span><span>📘</span><span>✖️</span><span>🎵</span></div>
+      <p class="foot-links">
+        <a href="/about.html">About</a> ·
+        <a href="/safety.html">Safety</a> ·
+        <a href="/terms.html">Terms</a> ·
+        <a href="/privacy.html">Privacy</a> ·
+        <a href="/contact.html">Contact</a>
+      </p>
       <p>© 2026 Pandoo</p>
       <p class="fineprint">18+ only. Be kind. No nudity, no spam.</p>
      </div>

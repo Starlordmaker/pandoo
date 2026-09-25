@@ -394,11 +394,15 @@ function authProfileExtra() {
 async function initHeroCamera() {
   const v = $('hero-preview');
   if (!v) return;
+  const cam = v.closest('.ap-camera');
   try {
     const stream = await ensureMedia();
+    v.style.display = '';
     v.srcObject = stream;
+    if (cam) cam.classList.add('live'); /* mobile: full-bleed video mode */
   } catch (e) {
     v.style.display = 'none';
+    if (cam) cam.classList.remove('live');
     const off = document.querySelector('.ap-camera-off');
     if (off) off.classList.remove('hidden');
   }
@@ -409,6 +413,7 @@ function initLoginModal() {
   const open = () => m.classList.remove('hidden');
   const close = () => m.classList.add('hidden');
   const b = $('btn-login'); if (b) b.onclick = open;
+  const bm = $('btn-login-m'); if (bm) bm.onclick = open;
   const c = $('btn-login-close'); if (c) c.onclick = close;
   m.addEventListener('click', e => { if (e.target === m) close(); });
 }
@@ -450,6 +455,7 @@ async function onGoogleCredential(resp) {
 }
 function renderAuthUser() {
   const wrap = $('google-btn-wrap'), chip = $('user-chip'), btn = $('btn-login');
+  const bm = $('btn-login-m');
   if (authUser) {
     if (wrap) wrap.style.display = 'none';
     const fb = $('fb-login-btn'); if (fb) fb.style.display = 'none';
@@ -457,10 +463,17 @@ function renderAuthUser() {
     chip.style.display = 'flex';
     $('user-avatar').src = authUser.picture || '';
     $('user-name').textContent = authUser.name || 'Friend';
+    if (bm && authUser.picture) {
+      bm.textContent = '';
+      const im = document.createElement('img');
+      im.src = authUser.picture; im.alt = authUser.name || 'You';
+      bm.appendChild(im);
+    }
   } else {
     if (wrap) wrap.style.display = 'flex';
     if (btn) btn.style.display = '';
     chip.style.display = 'none';
+    if (bm) bm.textContent = '👤';
     initFacebookLogin();
   }
 }
@@ -532,7 +545,7 @@ function init() {
   const sidebar = $('sidebar'), sbOverlay = $('sidebar-overlay');
   const openSidebar = () => { if (sidebar && sbOverlay) { sidebar.classList.add('open'); sbOverlay.classList.remove('hidden'); } };
   const closeSidebar = () => { if (sidebar && sbOverlay) { sidebar.classList.remove('open'); sbOverlay.classList.add('hidden'); } };
-  const railMenu = $('btn-rail-menu'), mobileMenu = $('btn-menu-mobile'), sbClose = $('btn-sb-close');
+  const railMenu = $('btn-rail-menu'), mobileMenu = $('btn-m-menu'), sbClose = $('btn-sb-close');
   if (railMenu) railMenu.addEventListener('click', e => { e.stopPropagation(); openSidebar(); });
   if (mobileMenu) mobileMenu.addEventListener('click', e => { e.stopPropagation(); openSidebar(); });
   if (sbClose) sbClose.addEventListener('click', closeSidebar);

@@ -82,7 +82,7 @@ function filtersInit() {
   $('sel-region').value = filters.region;
   $('sel-region').onchange = (e) => { filters.region = e.target.value; refreshSummary(); };
   chipsInit(); refreshSummary();
-  $('btn-filters-back').onclick = () => { saveFilters(); show('screen-home'); };
+  $('btn-filters-back').onclick = () => { saveFilters(); goHome(); };
   $('btn-filters-save').onclick = () => { saveFilters(); startFlow(); };
 }
 
@@ -123,6 +123,11 @@ async function flipCamera() {
 function stopMedia() {
   if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
   $('local-video').srcObject = null; $('remote-video').srcObject = null;
+  const hp = $('hero-preview'); if (hp) hp.srcObject = null;
+}
+function goHome() {
+  show('screen-home');
+  initHeroCamera(); /* re-attach live camera (fixes blank preview after cancel/end) */
 }
 
 /* ---------------- websocket ---------------- */
@@ -202,7 +207,7 @@ function cancelFind() {
   clearInterval(findingTimer);
   sendMsg({ type: 'leave' });
   cleanupCall();
-  show('screen-home');
+  goHome();
 }
 function endScreen(title, sub) {
   clearInterval(findingTimer);
@@ -502,7 +507,7 @@ function init() {
   $('btn-find-new').onclick = startFlow;
   $('btn-logout').onclick = googleLogout;
   initGoogleLogin();
-  $('btn-home').onclick = () => { stopMedia(); show('screen-home'); };
+  $('btn-home').onclick = () => { stopMedia(); goHome(); };
   // scroll-reveal animations
   try {
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });

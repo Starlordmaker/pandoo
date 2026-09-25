@@ -258,18 +258,15 @@ body{
 .mode-tabs button{font-family:"Press Start 2P",monospace;font-size:11px;padding:11px 26px;background:#2456c4;color:#fff;border:none;cursor:pointer}
 .mode-tabs button.on{background:#ffa726;color:#141414}
 .globe{font-size:64px;line-height:1}
-/* searching panda: runs around the spinning globe */
-.globe-wrap{position:relative;width:168px;height:168px;margin:4px auto}
-.orbit-ring{position:absolute;inset:0;border:3px dashed rgba(255,255,255,.55);border-radius:50%;animation:spin 7s linear infinite}
-.globe-wrap .globe{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:82px;animation:globe-bob 2.6s ease-in-out infinite}
-.orbit{position:absolute;inset:0;animation:spin 3.4s linear infinite}
-.panda-run{position:absolute;left:50%;top:-8px;width:56px;height:56px;margin-left:-28px;
-  background:url('img/pandoo-run.png') 0 0/224px 56px no-repeat;image-rendering:pixelated;
-  animation:run-cycle .48s steps(4) infinite,spin-rev 3.4s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes spin-rev{to{transform:rotate(-360deg)}}
-@keyframes run-cycle{to{background-position:-224px 0}}
-@keyframes globe-bob{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.07) rotate(5deg)}}
+/* searching panda: runs on top of the globe */
+.globe-wrap{position:relative;width:150px;height:150px;margin:4px auto}
+.globe-wrap .globe{display:flex;align-items:center;justify-content:center;height:100%;font-size:92px;animation:globe-bob 2.8s ease-in-out infinite}
+.panda-run{position:absolute;left:50%;top:0;width:62px;height:62px;margin-left:-31px;
+  background:url('img/pandoo-run.png') 0 0/248px 62px no-repeat;image-rendering:pixelated;
+  animation:run-cycle .48s steps(4) infinite,panda-bounce .48s ease-in-out infinite}
+@keyframes run-cycle{to{background-position:-248px 0}}
+@keyframes panda-bounce{0%,100%{margin-top:0}50%{margin-top:-9px}}
+@keyframes globe-bob{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.06)}}
 .online-pill.green{background:#22c55e;color:#fff;border-color:#141414;font-size:13px}
 .online-pill.green .dot{background:#fff;border-color:#141414;animation:none}
 .filter-pill{width:100%;background:#63e6a4;border:3px solid #141414;color:#141414;

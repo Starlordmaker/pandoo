@@ -518,6 +518,15 @@ body{
 
 /* ============ responsive hero: phones & tablets ============ */
 @media (max-width:599px){
+  /* decorative pandas must never cover text on small screens */
+  .hero-panda{display:none}
+  .hero-panda.mini{display:block;width:72px;left:-8px;top:8%}
+  /* floating hero decorations land on text when the hero stacks tall — hide on phones */
+  .hero-decor .px-heart,.hero-decor .px-star,.hero-decor .px-plus{display:none}
+  .band-panda{width:170px;right:-34px;top:50%;opacity:.16;transform:translateY(-50%)}
+  .pixel-band .wrap{position:relative;z-index:1}
+  .hero-info h3{text-wrap:balance}
+  .band-title,.mega-sub{text-wrap:balance}
   /* compact hero: START stays reachable without a long scroll */
   #hero-preview{height:230px}
   .hero{padding:12px 12px 22px}

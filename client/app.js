@@ -528,14 +528,16 @@ function init() {
   filtersInit();
   $('btn-start').onclick = startFlow;
   const bs2 = $('btn-start2'); if (bs2) bs2.onclick = startFlow;
-  // corner menu box
-  const menuBtn = $('btn-menu'), menuBox = $('menu-box');
-  if (menuBtn && menuBox) {
-    menuBtn.addEventListener('click', e => { e.stopPropagation(); menuBox.classList.toggle('hidden'); });
-    document.addEventListener('click', e => {
-      if (!menuBox.classList.contains('hidden') && !menuBox.contains(e.target)) menuBox.classList.add('hidden');
-    });
-  }
+  // sidebar menu (side header)
+  const sidebar = $('sidebar'), sbOverlay = $('sidebar-overlay');
+  const openSidebar = () => { if (sidebar && sbOverlay) { sidebar.classList.add('open'); sbOverlay.classList.remove('hidden'); } };
+  const closeSidebar = () => { if (sidebar && sbOverlay) { sidebar.classList.remove('open'); sbOverlay.classList.add('hidden'); } };
+  const railMenu = $('btn-rail-menu'), mobileMenu = $('btn-menu-mobile'), sbClose = $('btn-sb-close');
+  if (railMenu) railMenu.addEventListener('click', e => { e.stopPropagation(); openSidebar(); });
+  if (mobileMenu) mobileMenu.addEventListener('click', e => { e.stopPropagation(); openSidebar(); });
+  if (sbClose) sbClose.addEventListener('click', closeSidebar);
+  if (sbOverlay) sbOverlay.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
   $('tab-squad').onclick = () => toast('Squad mode coming soon!');
   $('tab-solo').onclick = () => { $('tab-solo').classList.add('on'); $('tab-squad').classList.remove('on'); };
   $('tab-squad').addEventListener('click', () => { $('tab-squad').classList.add('on'); $('tab-solo').classList.remove('on'); });

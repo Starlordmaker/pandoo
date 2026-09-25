@@ -20,6 +20,13 @@
 
     <!-- HERO -->
     <div class="hero">
+     <!-- hay-style left icon rail (desktop): quick links + menu at bottom -->
+     <aside class="icon-rail" aria-label="Quick links">
+       <a class="rail-icon" href="/" title="Video chat">📹</a>
+       <a class="rail-icon" href="/features.html" title="Features">✨</a>
+       <a class="rail-icon" href="/safety.html" title="Safety">🛡️</a>
+       <button id="btn-rail-menu" class="rail-icon rail-burger" aria-label="Open menu">☰</button>
+     </aside>
      <div class="hero-decor" aria-hidden="true">
        <img src="img/pandoo-camera.png" class="hero-panda" alt="Pandoo panda filming">
        <img src="img/pandoo-mascot.png" class="hero-panda mini" alt="">
@@ -29,20 +36,10 @@
      </div>
      <div class="wrap">
       <nav class="hero-nav">
+        <button id="btn-menu-mobile" class="menu-btn" aria-label="Menu">&#9776;</button>
         <img src="img/pandoo-logo.png" class="nav-logo" alt="Pandoo">
         <div class="nav-right">
           <div class="online-pill sm"><span class="dot"></span><span class="online-count">0</span>&nbsp;online</div>
-          <div class="menu-wrap">
-            <button id="btn-menu" class="menu-btn" aria-label="Menu">&#9776;</button>
-            <div id="menu-box" class="menu-box hidden">
-              <a href="/features.html">&#10024; Features</a>
-              <a href="/about.html">&#8505;&#65039; About</a>
-              <a href="/safety.html">&#128737;&#65039; Safety</a>
-              <a href="/terms.html">&#128196; Terms</a>
-              <a href="/privacy.html">&#128274; Privacy</a>
-              <a href="/contact.html">&#9993;&#65039; Contact</a>
-            </div>
-          </div>
         </div>
       </nav>
 
@@ -199,6 +196,25 @@
       <button id="btn-home" class="btn-chunky btn-white btn-small">Home</button>
     </div>
   </section>
+
+  <!-- ============ SIDEBAR MENU (side header) ============ -->
+  <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+  <aside id="sidebar" class="sidebar" aria-label="Site menu">
+    <div class="sb-head">
+      <img src="img/pandoo-logo.png" alt="Pandoo">
+      <button id="btn-sb-close" class="menu-btn" aria-label="Close menu">✕</button>
+    </div>
+    <nav class="sb-links">
+      <a href="/">🏠 <span>Home</span></a>
+      <a href="/features.html">✨ <span>Features</span></a>
+      <a href="/about.html">ℹ️ <span>About</span></a>
+      <a href="/safety.html">🛡️ <span>Safety</span></a>
+      <a href="/terms.html">📄 <span>Terms</span></a>
+      <a href="/privacy.html">🔒 <span>Privacy</span></a>
+      <a href="/contact.html">✉️ <span>Contact</span></a>
+    </nav>
+    <div class="sb-foot"><span class="dot"></span><span class="online-count">0</span>&nbsp;online now</div>
+  </aside>
 
   <!-- ============ LOGIN MODAL ============ -->
   <div id="login-modal" class="modal hidden">

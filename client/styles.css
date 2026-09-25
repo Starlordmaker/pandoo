@@ -248,18 +248,45 @@ body{
 /* HERO */
 .hero{background:#2557d6;padding:14px 14px 28px}
 .hero-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-/* corner menu box */
+/* hamburger button (mobile nav + sidebar close) */
 .nav-right{display:flex;align-items:center;gap:10px}
-.menu-wrap{position:relative}
 .menu-btn{width:44px;height:44px;border-radius:12px;background:#ffa726;border:3px solid #141414;
-  box-shadow:0 4px 0 #141414;font-size:20px;line-height:1;color:#141414;cursor:pointer;font-family:inherit}
+  box-shadow:0 4px 0 #141414;font-size:20px;line-height:1;color:#141414;cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;justify-content:center}
 .menu-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #141414}
-.menu-box{position:absolute;right:0;top:52px;background:#fffbe8;border:3px solid #141414;border-radius:14px;
-  box-shadow:6px 6px 0 rgba(0,0,0,.35);min-width:210px;z-index:60;overflow:hidden}
-.menu-box a{display:block;padding:12px 16px;font-weight:900;font-size:14px;color:#1e2a4a;text-decoration:none;
-  border-bottom:2px dashed #e8dfc2}
-.menu-box a:last-child{border-bottom:none}
-.menu-box a:hover{background:#ffe9a8}
+/* mobile hamburger sits left of the logo; desktop uses the icon rail instead */
+#btn-menu-mobile{display:inline-flex}
+@media (min-width:900px){#btn-menu-mobile{display:none}}
+
+/* hay-style left icon rail — desktop only (hidden on tablet/phone like hay) */
+.icon-rail{display:none}
+@media (min-width:900px){
+  .icon-rail{display:flex;position:absolute;left:0;top:0;bottom:0;width:76px;z-index:5;
+    flex-direction:column;align-items:center;padding:18px 0 22px;gap:12px;
+    background:#2f7cf6;border-right:4px solid #141414}
+  .rail-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;
+    font-size:26px;background:#fff;border:3px solid #141414;border-radius:16px;
+    box-shadow:0 4px 0 #141414;cursor:pointer;color:#141414;text-decoration:none;font-family:inherit}
+  .rail-icon:active{transform:translateY(3px);box-shadow:0 1px 0 #141414}
+  .rail-burger{margin-top:auto;background:#ffa726;font-size:22px}
+}
+
+/* slide-in sidebar menu (side header) */
+.sidebar-overlay{position:absolute;inset:0;background:rgba(20,20,20,.55);z-index:65}
+.sidebar{position:absolute;top:0;left:0;bottom:0;width:min(320px,84vw);z-index:70;
+  background:#fffbe8;border-right:4px solid #141414;
+  transform:translateX(-106%);transition:transform .28s ease;
+  display:flex;flex-direction:column;box-shadow:8px 0 24px rgba(0,0,0,.35)}
+.sidebar.open{transform:translateX(0)}
+.sb-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:3px dashed #e8dfc2}
+.sb-head img{height:40px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+.sb-links{display:flex;flex-direction:column;padding:14px;gap:10px;overflow-y:auto;flex:1}
+.sb-links a{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid #141414;border-radius:14px;
+  padding:13px 16px;font-weight:900;font-size:15px;color:#1e2a4a;text-decoration:none;box-shadow:0 4px 0 #141414}
+.sb-links a:active{transform:translateY(3px);box-shadow:0 1px 0 #141414}
+.sb-foot{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;
+  font-weight:900;font-size:13px;color:#5b6478;border-top:3px dashed #e8dfc2}
+.sb-foot .dot{width:10px;height:10px;border-radius:50%;background:#22c55e;border:2px solid #141414;animation:blink 1.6s infinite}
 /* landing = one screen: hero fills the viewport, camera sized to it */
 .screen.landing .hero{min-height:100dvh;display:flex;flex-direction:column;justify-content:center}
 .pixel-logo.tiny{font-size:15px;padding:10px 13px 8px;box-shadow:5px 5px 0 var(--ink);transform:rotate(-3deg);letter-spacing:1px}
@@ -379,7 +406,7 @@ body{
   /* landing goes full-bleed */
   .screen.landing{left:0;right:0;transform:none;width:100%;max-width:none}
   .wrap{max-width:1120px;margin:0 auto}
-  .hero{padding:24px 40px 36px}
+  .hero{padding:24px 40px 36px 116px} /* left room for the icon rail */
   .hero-nav{margin-bottom:36px}
   .pixel-logo.tiny{font-size:20px}
   .wrap{max-width:1360px}
@@ -548,7 +575,6 @@ body{
   .hero-nav{margin-bottom:8px}
   .nav-logo{height:40px}
   .menu-btn{width:40px;height:40px;font-size:18px}
-  .menu-box{top:48px;min-width:190px}
   /* camera scales with the phone's own resolution */
   #hero-preview{height:clamp(200px,28dvh,300px)}
   .ap-camera p{font-size:12px;padding:10px 16px 12px}

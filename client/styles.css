@@ -372,3 +372,13 @@ body{
   .cta-band .btn-chunky{font-size:20px;padding:20px 64px}
   .foot{padding:44px 40px}
 }
+
+/* ============ branding: logo + panda mascot ============ */
+.nav-logo{height:46px;width:auto;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.85))}
+.cta-band{position:relative}
+.cta-panda{width:150px;height:auto;display:block;margin:0 auto 6px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+@media (min-width:900px){
+  .nav-logo{height:60px}
+  .cta-panda{width:190px}
+}

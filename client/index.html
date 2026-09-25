@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Strango — Talk to Strangers, Random Video Chat</title>
+<meta name="description" content="Strango: random 1-on-1 video chat with strangers worldwide. Filters, live translation, safe & fun.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ HOME / LANDING (hay.fun style) ============ -->
+  <section id="screen-home" class="screen active landing">
+
+    <!-- HERO -->
+    <div class="hero">
+      <nav class="hero-nav">
+        <div class="pixel-logo tiny" aria-label="Strango">
+          <span style="color:#ee0a24">S</span><span style="color:#ff8917">t</span><span style="color:#7bc845">r</span><span style="color:#1E90FF">a</span><span style="color:#ff6034">n</span><span style="color:#ffc400">g</span><span style="color:#ff976a">o</span>
+        </div>
+        <div class="online-pill sm"><span class="dot"></span><span class="online-count">0</span>&nbsp;online</div>
+      </nav>
+
+      <div class="app-panel">
+        <div class="ap-camera">
+          <div class="px-frame"><span class="px-cam">📹</span></div>
+          <p>Turning off the camera = Turning off your chance to match!</p>
+        </div>
+        <div class="ap-controls">
+          <div class="mode-tabs">
+            <button class="on" id="tab-solo">Solo</button><button id="tab-squad">Squad</button>
+          </div>
+          <div class="globe">🌍</div>
+          <div class="online-pill green"><span class="dot"></span>ONLINE&nbsp;<span class="online-count">0</span></div>
+          <button id="btn-filters" class="filter-pill">👥&nbsp;<span id="filters-summary">All</span>&nbsp;▾</button>
+          <button id="btn-start" class="start-video-btn">START VIDEO CHAT ▸</button>
+        </div>
+      </div>
+
+      <div class="hero-info">
+        <h3>Strango — Best Random Video Chat APP</h3>
+        <p>Show your unique personality and connect with cool, young people from all over the world. Talk to strangers, share your stories, and learn new languages.</p>
+        <p class="hi">Meet the destined one on Strango 💛</p>
+      </div>
+    </div>
+
+    <!-- PIXEL HEADLINE BAND -->
+    <div class="pixel-band">
+      <span class="px-heart h1"></span><span class="px-star s1"></span><span class="px-heart h2"></span>
+      <h1 class="mega">STRANGO</h1>
+      <h2 class="mega-sub">GLOBAL SOCIAL HUB</h2>
+      <p class="mega-tag">Random video chat with strangers worldwide 🌍</p>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features-band">
+      <h2 class="band-title dark">Talk to Strangers</h2>
+      <p class="band-sub dark">Make Friends via Random Video Chat</p>
+      <div class="feat-cards">
+        <div class="feat-card">
+          <div class="feat-art">💬<span class="feat-art2">🔤</span></div>
+          <h3>Random Chat &amp; Translation</h3>
+          <p>Instantly connect with people worldwide through random video chat, text chat, and real-time translation — breaking down language barriers effortlessly.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-art">🔍<span class="feat-art2">👥</span></div>
+          <h3>Custom Filters for Strangers</h3>
+          <p>Connect with like-minded strangers based on gender, region, and shared interests. Find the perfect match in the random chat world.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-art">🛡️<span class="feat-art2">✨</span></div>
+          <h3>Secure &amp; Welcoming</h3>
+          <p>Chat with confidence with spam protection and easy reporting. Real people, real conversations — free from bots and interruptions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCOVER -->
+    <div class="discover-band">
+      <h2 class="band-title light">Discover New Connections,<br>Safely and Securely</h2>
+      <div class="feat-card wide">
+        <div class="feat-art">🎥<span class="feat-art2">💛</span></div>
+        <h3>Meet New People from Everywhere</h3>
+        <p>Chat with random strangers from diverse backgrounds and cultures, learn new languages, and broaden your horizons — all while having fun and making friends in a safe, 1-on-1 environment.</p>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="testi-band">
+      <h2 class="band-title light">Hey, People Seem<br>to Love Us Too!</h2>
+      <div class="testi-cards">
+        <div class="testi-card">
+          <div class="t-stars">★★★★★</div>
+          <p>"Love the video quality and how easy it is to meet new people!"</p>
+          <div class="t-who">🧑 Alex, London, 28</div>
+        </div>
+        <div class="testi-card">
+          <div class="t-stars">★★★★★</div>
+          <p>"The real-time translation helps me chat with people from different countries. Amazing!"</p>
+          <div class="t-who">👩 Emma, New York, 25</div>
+        </div>
+        <div class="testi-card">
+          <div class="t-stars">★★★★★</div>
+          <p>"Filters actually work — I met people who share my interests. So fun!"</p>
+          <div class="t-who">🧑 Rohan, Mumbai, 24</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-band">
+      <p class="cta-text">Ready to make<br>new friends?</p>
+      <button id="btn-start2" class="btn-chunky btn-black">START ▸</button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="foot">
+      <div class="socials"><span>📸</span><span>📘</span><span>✖️</span><span>🎵</span></div>
+      <p>© 2026 Strango</p>
+      <p class="fineprint">18+ only. Be kind. No nudity, no spam.</p>
+    </footer>
+  </section>
+
+  <!-- ============ FILTERS ============ -->
+  <section id="screen-filters" class="screen">
+    <div class="card">
+      <h2 class="pixel-h">FIND YOUR VIBE</h2>
+      <label class="flabel">I am</label>
+      <div class="seg" id="seg-gender">
+        <button data-v="male">Male</button><button data-v="female">Female</button><button data-v="other" class="on">Other</button>
+      </div>
+      <label class="flabel">I want to meet</label>
+      <div class="seg" id="seg-looking">
+        <button data-v="any" class="on">Anyone</button><button data-v="male">Male</button><button data-v="female">Female</button>
+      </div>
+      <label class="flabel">Region</label>
+      <select id="sel-region" class="select">
+        <option value="any">🌍 Anywhere</option>
+        <option value="india">🇮🇳 India</option>
+        <option value="us">🇺🇸 United States</option>
+        <option value="uk">🇬🇧 United Kingdom</option>
+        <option value="europe">🇪🇺 Europe</option>
+        <option value="apac">🌏 Asia-Pacific</option>
+        <option value="latam">🌎 Latin America</option>
+        <option value="mena">🕌 Middle East</option>
+        <option value="africa">🌍 Africa</option>
+      </select>
+      <label class="flabel">Interests <span class="muted">(match people who share them)</span></label>
+      <div class="chips" id="chips-interests"></div>
+      <div class="row">
+        <button id="btn-filters-back" class="btn-chunky btn-white btn-small">Back</button>
+        <button id="btn-filters-save" class="btn-chunky btn-coral btn-small">Save &amp; Start ▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINDING ============ -->
+  <section id="screen-finding" class="screen">
+    <div class="finding-inner">
+      <div class="pixel-radar"><div class="pr-ring"></div><div class="pr-ring r2"></div><div class="pr-ring r3"></div><div class="pr-core">🔎</div></div>
+      <h2 class="pixel-h">FINDING A<br>STRANGER…</h2>
+      <p class="muted-dark" id="finding-hint">Matching your filters</p>
+      <button id="btn-cancel-find" class="btn-chunky btn-white btn-small">Cancel</button>
+    </div>
+  </section>
+
+  <!-- ============ CALL ============ -->
+  <section id="screen-call" class="screen">
+    <video id="remote-video" autoplay playsinline></video>
+    <div class="remote-placeholder" id="remote-placeholder">connecting…</div>
+
+    <div class="call-top">
+      <div class="peer-tag">
+        <span class="peer-avatar">👤</span>
+        <span class="peer-name">Stranger</span>
+        <span class="peer-timer" id="call-timer">00:00</span>
+      </div>
+      <div class="top-actions">
+        <button id="btn-report" class="pixel-btn" title="Report">❗</button>
+        <button id="btn-end-top" class="pixel-btn" title="End">✕</button>
+      </div>
+    </div>
+    <div class="peer-chips" id="peer-chips"></div>
+
+    <video id="local-video" autoplay playsinline muted></video>
+
+    <div id="chat-overlay" class="chat-overlay"></div>
+
+    <div class="call-controls">
+      <button id="btn-next" class="ctl next" title="Next stranger">⏭<small>Next</small></button>
+      <button id="btn-mic" class="ctl" title="Mute">🎙<small>Mute</small></button>
+      <button id="btn-chat" class="ctl" title="Chat history">💬<small>Chat</small></button>
+      <button id="btn-flip" class="ctl" title="Switch camera">🔄<small>Flip</small></button>
+      <button id="btn-end" class="ctl end" title="End call"><span class="glyph">📞</span><small>End</small></button>
+    </div>
+
+    <div class="msg-bar">
+      <input id="msg-input" type="text" maxlength="500" placeholder="Send a message…" autocomplete="off">
+      <button id="btn-msg-send" class="pixel-btn send">➤</button>
+    </div>
+
+    <div id="chat-sheet" class="chat-sheet hidden">
+      <div class="chat-head">
+        <span>💬 Chat with Stranger</span>
+        <div>
+          <label class="translate-toggle"><input type="checkbox" id="chk-translate" checked> 🔤 translate</label>
+          <button id="btn-chat-close" class="pixel-btn">✕</button>
+        </div>
+      </div>
+      <div id="chat-msgs" class="chat-msgs"></div>
+    </div>
+  </section>
+
+  <!-- ============ ENDED ============ -->
+  <section id="screen-ended" class="screen">
+    <div class="ended-inner">
+      <div class="pixel-logo small" aria-label="Strango">
+        <span style="color:#ee0a24">S</span><span style="color:#ff8917">t</span><span style="color:#7bc845">r</span><span style="color:#1E90FF">a</span><span style="color:#ff6034">n</span><span style="color:#ffc400">g</span><span style="color:#ff976a">o</span>
+      </div>
+      <h2 class="pixel-h" id="ended-title">CHAT ENDED</h2>
+      <p class="muted-dark" id="ended-sub">The stranger left the chat.</p>
+      <button id="btn-find-new" class="btn-chunky btn-coral">🔎 Find new match</button>
+      <button id="btn-home" class="btn-chunky btn-white btn-small">Home</button>
+    </div>
+  </section>
+
+  <!-- ============ REPORT MODAL ============ -->
+  <div id="report-modal" class="modal hidden">
+    <div class="card">
+      <h3 class="pixel-h">REPORT</h3>
+      <p class="muted-dark">What happened? Our team reviews reports.</p>
+      <div class="report-reasons">
+        <button data-r="nudity">🔞 Nudity / sexual content</button>
+        <button data-r="harassment">😡 Harassment / abuse</button>
+        <button data-r="spam">🤖 Spam / bot</button>
+        <button data-r="minor">🧒 Underage user</button>
+        <button data-r="other">❓ Other</button>
+      </div>
+      <button id="btn-report-cancel" class="btn-chunky btn-white btn-small">Cancel</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

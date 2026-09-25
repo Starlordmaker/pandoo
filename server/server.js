@@ -65,6 +65,8 @@ const wss = new WebSocketServer({ server, path: '/ws' });
 let OAuth2Client = null;
 try { OAuth2Client = require('google-auth-library').OAuth2Client; } catch (e) { /* google login disabled */ }
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID || '';
+const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || '';
 const sessions = new Map(); // sid -> { name, email, picture, sub, createdAt }
 
 function parseCookies(req) {
@@ -91,7 +93,7 @@ function json(res, code, obj, headers) {
 async function handleApi(req, res) {
   const urlPath = req.url.split('?')[0];
   if (urlPath === '/api/config' && req.method === 'GET') {
-    json(res, 200, { googleClientId: GOOGLE_CLIENT_ID || null });
+    json(res, 200, { googleClientId: GOOGLE_CLIENT_ID || null, facebookAppId: FACEBOOK_APP_ID || null });
     return true;
   }
   if (urlPath === '/api/auth/me' && req.method === 'GET') {
@@ -120,6 +122,33 @@ async function handleApi(req, res) {
         { 'set-cookie': 'pandoo_sid=' + sid + '; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax' });
     } catch (e) {
       json(res, 401, { error: 'invalid google credential' });
+    }
+    return true;
+  }
+  if (urlPath === '/api/auth/facebook' && req.method === 'POST') {
+    if (!FACEBOOK_APP_ID) { json(res, 501, { error: 'facebook login not configured' }); return true; }
+    let body;
+    try { body = JSON.parse(await readBody(req)); } catch (e) { json(res, 400, { error: 'bad json' }); return true; }
+    if (!body.accessToken) { json(res, 400, { error: 'missing accessToken' }); return true; }
+    try {
+      const token = body.accessToken;
+      // verify the token really belongs to our app (when app secret is set)
+      if (FACEBOOK_APP_SECRET) {
+        const dbg = await (await fetch('https://graph.facebook.com/debug_token?input_token='
+          + encodeURIComponent(token) + '&access_token=' + encodeURIComponent(FACEBOOK_APP_ID + '|' + FACEBOOK_APP_SECRET))).json();
+        if (!dbg.data || !dbg.data.is_valid || String(dbg.data.app_id) !== String(FACEBOOK_APP_ID)) throw 0;
+      }
+      const me = await (await fetch('https://graph.facebook.com/me?fields=id,name,picture.type(large)&access_token='
+        + encodeURIComponent(token))).json();
+      if (!me.id) throw 0;
+      const pic = me.picture && me.picture.data && me.picture.data.url;
+      const sid = crypto.randomUUID();
+      sessions.set(sid, { name: me.name, email: '', picture: pic || '', sub: 'fb:' + me.id, createdAt: Date.now() });
+      if (sessions.size % 50 === 0) { const t = Date.now(); for (const [k, v] of sessions) if (t - v.createdAt > 30 * 864e5) sessions.delete(k); }
+      json(res, 200, { name: me.name, email: '', picture: pic || '' },
+        { 'set-cookie': 'pandoo_sid=' + sid + '; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax' });
+    } catch (e) {
+      json(res, 401, { error: 'invalid facebook token' });
     }
     return true;
   }

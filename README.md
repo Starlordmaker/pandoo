@@ -50,6 +50,29 @@ an OAuth Client ID — creating one is free and takes ~5 minutes:
 That's it — the button activates automatically, login creates a session
 cookie, and your Google name/photo travel with you into the chat profile.
 
+## Facebook login setup (optional)
+
+The "Continue with Facebook" button stays hidden until you add a Facebook
+App ID — creating one is free:
+
+1. Go to **https://developers.facebook.com/apps** (log in with Facebook)
+   and **Create App** (type: Consumer).
+2. In the app dashboard, add the **Facebook Login** product.
+3. Under **Facebook Login → Settings → Valid OAuth Redirect URIs** add:
+   - `http://localhost:3000/` (for local testing)
+   - your production domain later (e.g. `https://pandoo.onrender.com/`)
+4. Copy the **App ID** from **Settings → Basic**. For stronger token
+   verification also copy the **App Secret**.
+5. Start the server with them:
+   ```bash
+   FACEBOOK_APP_ID="1234567890" FACEBOOK_APP_SECRET="xxxx" npm start
+   ```
+   (On Render/Railway, add them as environment variables instead.
+   `FACEBOOK_APP_SECRET` is optional but recommended.)
+
+That's it — the button appears automatically, login creates a session
+cookie, and your Facebook name/photo travel with you into the chat profile.
+
 ## How it works
 
 ```

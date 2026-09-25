@@ -192,7 +192,7 @@ async function startFlow() {
   catch { toast('📷 Camera/mic permission needed'); return; }
   try { await connect(); }
   catch { toast('Could not reach server. Try again.'); return; }
-  sendMsg({ type: 'join', profile: Object.assign({ ...filters, lang: userLang }, googleProfileExtra()) });
+  sendMsg({ type: 'join', profile: Object.assign({ ...filters, lang: userLang }, authProfileExtra()) });
   showFinding();
 }
 function showFinding() {
@@ -382,12 +382,13 @@ function submitReport(reason) {
   closeReport();
   cleanupCall();
   showFinding();
-  sendMsg({ type: 'join', profile: Object.assign({ ...filters, lang: userLang }, googleProfileExtra()) });
+  sendMsg({ type: 'join', profile: Object.assign({ ...filters, lang: userLang }, authProfileExtra()) });
 }
 
 /* ---------------- google login ---------------- */
 let googleUser = null;
-function googleProfileExtra() {
+let authUser = null; // { name, email, picture, provider }
+function authProfileExtra() {
   return googleUser ? { name: googleUser.name, avatar: googleUser.picture } : {};
 }
 async function initHeroCamera() {
@@ -416,14 +417,15 @@ async function initGoogleLogin() {
   try { cfg = await (await fetch('/api/config')).json(); } catch (e) {}
   try {
     const r = await fetch('/api/auth/me');
-    if (r.ok) { googleUser = await r.json(); renderGoogleUser(); }
+    if (r.ok) { authUser = await r.json(); renderAuthUser(); }
   } catch (e) {}
   const wrap = $('google-btn-wrap'), hint = $('login-hint');
   if (!cfg.googleClientId) {
     if (wrap) wrap.style.display = 'none';
-    if (hint) { hint.textContent = '🔑 Google login coming soon'; hint.style.display = 'block'; }
+    updateLoginHint();
     return;
   }
+  if (hint) hint.style.display = 'none';
   let tries = 0;
   const tick = () => {
     if (window.google && window.google.accounts) {
@@ -440,31 +442,83 @@ async function onGoogleCredential(resp) {
   try {
     const r = await fetch('/api/auth/google', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ credential: resp.credential }) });
     if (!r.ok) throw 0;
-    googleUser = await r.json();
-    renderGoogleUser();
+    authUser = Object.assign(await r.json(), { provider: 'google' });
+    renderAuthUser();
     const m = $('login-modal'); if (m) m.classList.add('hidden');
-    toast('👋 Welcome, ' + (googleUser.name || 'friend') + '!');
+    toast('👋 Welcome, ' + (authUser.name || 'friend') + '!');
   } catch (e) { toast('Google login failed. Try again.'); }
 }
-function renderGoogleUser() {
+function renderAuthUser() {
   const wrap = $('google-btn-wrap'), chip = $('user-chip'), btn = $('btn-login');
-  if (googleUser) {
+  if (authUser) {
     if (wrap) wrap.style.display = 'none';
+    const fb = $('fb-login-btn'); if (fb) fb.style.display = 'none';
     if (btn) btn.style.display = 'none';
     chip.style.display = 'flex';
-    $('user-avatar').src = googleUser.picture || '';
-    $('user-name').textContent = googleUser.name || 'Friend';
+    $('user-avatar').src = authUser.picture || '';
+    $('user-name').textContent = authUser.name || 'Friend';
   } else {
     if (wrap) wrap.style.display = 'flex';
     if (btn) btn.style.display = '';
     chip.style.display = 'none';
+    initFacebookLogin();
   }
 }
-async function googleLogout() {
+/* ---------------- facebook login ---------------- */
+let fbAppId = null, fbSdkLoading = false;
+function initFacebookLogin() {
+  const btn = $('fb-login-btn');
+  if (!btn) return;
+  fetch('/api/config').then(r => r.json()).then(cfg => {
+    fbAppId = cfg.facebookAppId || null;
+    if (!fbAppId) { btn.style.display = 'none'; updateLoginHint(); return; }
+    if (authUser) { btn.style.display = 'none'; return; }
+    btn.style.display = '';
+    updateLoginHint();
+    if (window.FB) return;
+    if (fbSdkLoading) return;
+    fbSdkLoading = true;
+    const sc = document.createElement('script');
+    sc.src = 'https://connect.facebook.net/en_US/sdk.js';
+    sc.async = true; sc.defer = true; sc.crossOrigin = 'anonymous';
+    sc.onload = () => { try { FB.init({ appId: fbAppId, cookie: false, xfbml: false, version: 'v21.0' }); } catch (e) {} };
+    document.head.appendChild(sc);
+  }).catch(() => {});
+  btn.onclick = onFacebookClick;
+}
+function updateLoginHint() {
+  const hint = $('login-hint');
+  if (!hint) return;
+  fetch('/api/config').then(r => r.json()).then(cfg => {
+    if (!cfg.googleClientId && !cfg.facebookAppId) {
+      hint.textContent = '🔑 Logins coming soon';
+      hint.style.display = 'block';
+    } else hint.style.display = 'none';
+  }).catch(() => {});
+}
+function onFacebookClick() {
+  if (!window.FB || !fbAppId) { toast('Facebook login unavailable'); return; }
+  try { FB.init({ appId: fbAppId, cookie: false, xfbml: false, version: 'v21.0' }); } catch (e) {}
+  FB.login(async resp => {
+    if (!resp || !resp.authResponse || !resp.authResponse.accessToken) return;
+    try {
+      const r = await fetch('/api/auth/facebook', { method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ accessToken: resp.authResponse.accessToken }) });
+      if (!r.ok) throw 0;
+      authUser = Object.assign(await r.json(), { provider: 'facebook' });
+      renderAuthUser();
+      const m = $('login-modal'); if (m) m.classList.add('hidden');
+      toast('👋 Welcome, ' + (authUser.name || 'friend') + '!');
+    } catch (e) { toast('Facebook login failed. Try again.'); }
+  }, { scope: 'public_profile' });
+}
+async function authLogout() {
   try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) {}
   try { google.accounts.id.disableAutoSelect(); } catch (e) {}
-  googleUser = null;
-  renderGoogleUser();
+  try { if (window.FB) FB.logout(); } catch (e) {}
+  authUser = null;
+  renderAuthUser();
 }
 
 /* ---------------- wire up ---------------- */
@@ -505,8 +559,9 @@ function init() {
   $('btn-report-cancel').onclick = closeReport;
   document.querySelectorAll('.report-reasons button').forEach(b => b.onclick = () => submitReport(b.dataset.r));
   $('btn-find-new').onclick = startFlow;
-  $('btn-logout').onclick = googleLogout;
+  $('btn-logout').onclick = authLogout;
   initGoogleLogin();
+  initFacebookLogin();
   $('btn-home').onclick = () => { stopMedia(); goHome(); };
   // scroll-reveal animations
   try {

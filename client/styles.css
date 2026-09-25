@@ -31,6 +31,8 @@ body{
 .pixel-h{font-family:"Press Start 2P",monospace;font-size:20px;line-height:1.6;letter-spacing:1px}
 
 /* ---------- chunky retro buttons ---------- */
+.btn-fb{background:#1877f2;color:#fff;border:3px solid #141414;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px}
+.btn-fb .fb-f{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:#fff;color:#1877f2;font-weight:900;font-size:20px;border-radius:6px;line-height:1}
 .btn-chunky{
   font-family:"Nunito",sans-serif;font-weight:900;font-size:18px;
   border:3px solid var(--ink);border-radius:18px;

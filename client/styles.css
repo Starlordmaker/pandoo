@@ -382,3 +382,9 @@ body{
   .nav-logo{height:60px}
   .cta-panda{width:190px}
 }
+
+/* ============ desktop side backdrop (no more white sides) ============ */
+@media (min-width:900px){
+  body{background:#14245c;background-image:radial-gradient(rgba(255,255,255,.08) 2px,transparent 2.5px);background-size:28px 28px}
+  .screen:not(.landing){box-shadow:0 0 70px rgba(0,0,0,.5);border-left:4px solid #0b1437;border-right:4px solid #0b1437}
+}

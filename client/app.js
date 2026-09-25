@@ -74,7 +74,7 @@ function chipsInit() {
 }
 function refreshSummary() {
   const g = filters.lookingFor === 'any' ? 'Anyone' : filters.lookingFor[0].toUpperCase() + filters.lookingFor.slice(1);
-  $('filters-summary').textContent = `${g}, ${REGION_LABEL[filters.region] || 'Anywhere'}`;
+  const fs = $('filters-summary'); if (fs) fs.textContent = g;
 }
 function filtersInit() {
   segInit('seg-gender', 'gender');
@@ -473,6 +473,7 @@ function init() {
   $('tab-solo').onclick = () => { $('tab-solo').classList.add('on'); $('tab-squad').classList.remove('on'); };
   $('tab-squad').addEventListener('click', () => { $('tab-squad').classList.add('on'); $('tab-solo').classList.remove('on'); });
   $('btn-filters').onclick = () => show('screen-filters');
+  const bf2 = $('btn-filters2'); if (bf2) bf2.onclick = () => show('screen-filters');
   $('btn-cancel-find').onclick = cancelFind;
   $('btn-next').onclick = doNext;
   $('btn-end').onclick = doEnd;

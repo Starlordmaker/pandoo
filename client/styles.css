@@ -18,7 +18,7 @@
 html,body{height:100%}
 body{
   font-family:"Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:var(--cream);
+  background:#2b59ff;
   color:var(--ink);
   overflow:hidden;
   font-weight:700;
@@ -240,7 +240,7 @@ body{
 }
 
 /* ================= LANDING (hay.fun style) ================= */
-#screen-home.landing{overflow-y:auto;background:#fff}
+#screen-home.landing{overflow-y:auto;background:#2b59ff}
 #screen-home.landing.active{display:block}
 
 /* HERO */
@@ -441,3 +441,26 @@ body{
   .hero-panda.mini{width:120px;left:2%}
   .band-panda{width:150px;right:6%}
 }
+
+/* finding camera preview */
+.finding-preview-wrap{position:relative;width:180px}
+#finding-preview{width:180px;height:240px;object-fit:cover;border-radius:20px;border:4px solid #141414;box-shadow:5px 5px 0 #141414;background:#111;transform:scaleX(-1)}
+.fp-label{position:absolute;left:10px;bottom:10px;background:#141414;color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px}
+
+/* ============ marquee ============ */
+.marquee{background:#141414;color:#ffd01e;overflow:hidden;border-top:4px solid #000;border-bottom:4px solid #000;padding:10px 0}
+.marquee-track{display:flex;gap:44px;white-space:nowrap;width:max-content;animation:scrollx 18s linear infinite}
+.marquee-track span{font-family:"Press Start 2P",monospace;font-size:13px}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ============ start button pulse ============ */
+@keyframes pulsebtn{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.start-video-btn{animation:pulsebtn 2.2s ease-in-out infinite}
+.start-video-btn:active{animation:none}
+
+/* ============ scroll reveal ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ panda images stay crisp ============ */
+.hero-panda,.band-panda,.cta-panda,.hero-panda.mini{image-rendering:pixelated}

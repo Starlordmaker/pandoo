@@ -100,6 +100,7 @@ async function ensureMedia() {
   if (localStream) localStream.getTracks().forEach(t => t.stop());
   localStream = stream;
   $('local-video').srcObject = stream;
+  const fp = $('finding-preview'); if (fp) fp.srcObject = stream;
   return stream;
 }
 async function flipCamera() {
@@ -475,6 +476,11 @@ function init() {
   $('btn-logout').onclick = googleLogout;
   initGoogleLogin();
   $('btn-home').onclick = () => { stopMedia(); show('screen-home'); };
+  // scroll-reveal animations
+  try {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } catch (e) {}
   // idle online-count fetch (before first socket opens)
   fetch('/health').then(r => r.json()).then(j => { document.querySelectorAll('.online-count').forEach(el => el.textContent = j.online ?? 0); }).catch(() => {});
 }

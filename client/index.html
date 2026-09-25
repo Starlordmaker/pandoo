@@ -21,7 +21,7 @@
     <!-- HERO -->
     <div class="hero">
      <div class="hero-decor" aria-hidden="true">
-       <img src="img/pandoo-mascot.png" class="hero-panda" alt="">
+       <img src="img/pandoo-camera.png" class="hero-panda" alt="Pandoo panda filming">
        <img src="img/pandoo-mascot.png" class="hero-panda mini" alt="">
        <span class="px-heart fh1"></span><span class="px-heart fh2"></span>
        <span class="px-star fs1"></span><span class="px-star fs2"></span>
@@ -68,6 +68,12 @@
      </div><!-- /wrap -->
     </div>
 
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true"><div class="marquee-track">
+      <span>🐼 MEET NEW FRIENDS</span><span>📹 RANDOM VIDEO CHAT</span><span>🌍 TALK WORLDWIDE</span><span>💛 100% FREE</span><span>⚡ INSTANT MATCHING</span>
+      <span>🐼 MEET NEW FRIENDS</span><span>📹 RANDOM VIDEO CHAT</span><span>🌍 TALK WORLDWIDE</span><span>💛 100% FREE</span><span>⚡ INSTANT MATCHING</span>
+    </div></div>
+
     <!-- PIXEL HEADLINE BAND -->
     <div class="pixel-band">
      <div class="wrap">
@@ -85,17 +91,17 @@
       <h2 class="band-title dark">Talk to Strangers</h2>
       <p class="band-sub dark">Make Friends via Random Video Chat</p>
       <div class="feat-cards">
-        <div class="feat-card">
+        <div class="feat-card reveal">
           <div class="feat-art">💬<span class="feat-art2">🔤</span></div>
           <h3>Random Chat &amp; Translation</h3>
           <p>Instantly connect with people worldwide through random video chat, text chat, and real-time translation — breaking down language barriers effortlessly.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal">
           <div class="feat-art">🔍<span class="feat-art2">👥</span></div>
           <h3>Custom Filters for Strangers</h3>
           <p>Connect with like-minded strangers based on gender, region, and shared interests. Find the perfect match in the random chat world.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card reveal">
           <div class="feat-art">🛡️<span class="feat-art2">✨</span></div>
           <h3>Secure &amp; Welcoming</h3>
           <p>Chat with confidence with spam protection and easy reporting. Real people, real conversations — free from bots and interruptions.</p>
@@ -121,17 +127,17 @@
      <div class="wrap">
       <h2 class="band-title light">Hey, People Seem<br>to Love Us Too!</h2>
       <div class="testi-cards">
-        <div class="testi-card">
+        <div class="testi-card reveal">
           <div class="t-stars">★★★★★</div>
           <p>"Love the video quality and how easy it is to meet new people!"</p>
           <div class="t-who">🧑 Alex, London, 28</div>
         </div>
-        <div class="testi-card">
+        <div class="testi-card reveal">
           <div class="t-stars">★★★★★</div>
           <p>"The real-time translation helps me chat with people from different countries. Amazing!"</p>
           <div class="t-who">👩 Emma, New York, 25</div>
         </div>
-        <div class="testi-card">
+        <div class="testi-card reveal">
           <div class="t-stars">★★★★★</div>
           <p>"Filters actually work — I met people who share my interests. So fun!"</p>
           <div class="t-who">🧑 Rohan, Mumbai, 24</div>
@@ -143,7 +149,7 @@
     <!-- CTA -->
     <div class="cta-band">
      <div class="wrap">
-      <img src="img/pandoo-mascot.png" class="cta-panda" alt="Pandoo panda waving">
+      <img src="img/pandoo-dance.png" class="cta-panda" alt="Pandoo panda dancing">
       <p class="cta-text">Ready to make<br>new friends?</p>
       <button id="btn-start2" class="btn-chunky btn-black">START ▸</button>
      </div>
@@ -202,6 +208,7 @@
   <!-- ============ FINDING ============ -->
   <section id="screen-finding" class="screen">
     <div class="finding-inner">
+      <div class="finding-preview-wrap"><video id="finding-preview" autoplay playsinline muted></video><span class="fp-label">📷 YOU</span></div>
       <div class="pixel-radar"><div class="pr-ring"></div><div class="pr-ring r2"></div><div class="pr-ring r3"></div><div class="pr-core">🔎</div></div>
       <h2 class="pixel-h">FINDING A<br>STRANGER…</h2>
       <p class="muted-dark" id="finding-hint">Matching your filters</p>

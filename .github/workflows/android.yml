@@ -10,6 +10,9 @@ on:
       - '.github/workflows/android.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-apk:
     runs-on: ubuntu-latest
@@ -23,9 +26,6 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Build debug APK
         run: |
           chmod +x android/gradlew
@@ -36,3 +36,24 @@ jobs:
         with:
           name: pandoo-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+  release:
+    needs: build-apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: pandoo-apk
+          path: ./apk
+
+      - name: Rename APK
+        run: mv ./apk/app-debug.apk ./apk/pandoo.apk
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Pandoo APK (latest build)"
+          body: "Latest Pandoo Android app build. Download pandoo.apk and install on your phone."
+          files: ./apk/pandoo.apk

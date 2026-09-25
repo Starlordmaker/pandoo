@@ -36,7 +36,10 @@
       <div class="hero-split">
       <div class="app-panel">
         <div class="ap-camera">
-          <div class="px-frame"><span class="px-cam">📹</span></div>
+          <video id="hero-preview" autoplay playsinline muted></video>
+          <div class="ap-camera-off hidden">
+            <div class="px-frame"><span class="px-cam">📹</span></div>
+          </div>
           <p>Turning off the camera = Turning off your chance to match!</p>
         </div>
         <div class="ap-controls">
@@ -48,13 +51,12 @@
           <button id="btn-filters" class="filter-pill">👥&nbsp;<span id="filters-summary">All</span>&nbsp;▾</button>
           <button id="btn-start" class="start-video-btn">START VIDEO CHAT ▸</button>
           <div class="login-row">
-            <div id="google-btn-wrap"></div>
+            <button id="btn-login" class="login-pill">👤 Login</button>
             <div id="user-chip" style="display:none">
               <img id="user-avatar" alt="">
               <span id="user-name"></span>
               <button id="btn-logout" title="Log out">✕</button>
             </div>
-            <p id="login-hint" style="display:none"></p>
           </div>
         </div>
       </div>
@@ -174,7 +176,12 @@
 
   <!-- ============ FILTERS ============ -->
   <section id="screen-filters" class="screen">
-    <div class="card">
+    <div class="card brand-frame">
+      <span class="bf t" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <span class="bf b" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <span class="bf l" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <span class="bf r" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <div class="bf-pad">
       <h2 class="pixel-h">FIND YOUR VIBE</h2>
       <label class="flabel">I am</label>
       <div class="seg" id="seg-gender">
@@ -201,6 +208,7 @@
       <div class="row">
         <button id="btn-filters-back" class="btn-chunky btn-white btn-small">Back</button>
         <button id="btn-filters-save" class="btn-chunky btn-coral btn-small">Save &amp; Start ▶</button>
+      </div>
       </div>
     </div>
   </section>
@@ -273,6 +281,24 @@
       <button id="btn-home" class="btn-chunky btn-white btn-small">Home</button>
     </div>
   </section>
+
+  <!-- ============ LOGIN MODAL ============ -->
+  <div id="login-modal" class="modal hidden">
+    <div class="card brand-frame login-card">
+      <span class="bf t" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <span class="bf b" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <span class="bf l" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <span class="bf r" aria-hidden="true">PANDOO ★ PANDOO ★ PANDOO ★ PANDOO ★&nbsp;</span>
+      <div class="bf-pad">
+        <img src="img/pandoo-mascot.png" class="login-panda" alt="Pandoo panda">
+        <h3 class="pixel-h">MEET NEW<br>FRIENDS</h3>
+        <div id="google-btn-wrap"></div>
+        <p id="login-hint" class="muted-dark" style="display:none"></p>
+        <p class="terms-note">By logging in, you agree to our <a href="/terms.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
+        <button id="btn-login-close" class="btn-chunky btn-white btn-small">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============ REPORT MODAL ============ -->
   <div id="report-modal" class="modal hidden">

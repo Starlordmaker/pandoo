@@ -385,6 +385,27 @@ let googleUser = null;
 function googleProfileExtra() {
   return googleUser ? { name: googleUser.name, avatar: googleUser.picture } : {};
 }
+async function initHeroCamera() {
+  const v = $('hero-preview');
+  if (!v) return;
+  try {
+    const stream = await ensureMedia();
+    v.srcObject = stream;
+  } catch (e) {
+    v.style.display = 'none';
+    const off = document.querySelector('.ap-camera-off');
+    if (off) off.classList.remove('hidden');
+  }
+}
+function initLoginModal() {
+  const m = $('login-modal');
+  if (!m) return;
+  const open = () => m.classList.remove('hidden');
+  const close = () => m.classList.add('hidden');
+  const b = $('btn-login'); if (b) b.onclick = open;
+  const c = $('btn-login-close'); if (c) c.onclick = close;
+  m.addEventListener('click', e => { if (e.target === m) close(); });
+}
 async function initGoogleLogin() {
   let cfg = {};
   try { cfg = await (await fetch('/api/config')).json(); } catch (e) {}
@@ -416,18 +437,21 @@ async function onGoogleCredential(resp) {
     if (!r.ok) throw 0;
     googleUser = await r.json();
     renderGoogleUser();
+    const m = $('login-modal'); if (m) m.classList.add('hidden');
     toast('👋 Welcome, ' + (googleUser.name || 'friend') + '!');
   } catch (e) { toast('Google login failed. Try again.'); }
 }
 function renderGoogleUser() {
-  const wrap = $('google-btn-wrap'), chip = $('user-chip');
+  const wrap = $('google-btn-wrap'), chip = $('user-chip'), btn = $('btn-login');
   if (googleUser) {
-    wrap.style.display = 'none';
+    if (wrap) wrap.style.display = 'none';
+    if (btn) btn.style.display = 'none';
     chip.style.display = 'flex';
     $('user-avatar').src = googleUser.picture || '';
     $('user-name').textContent = googleUser.name || 'Friend';
   } else {
-    wrap.style.display = 'flex';
+    if (wrap) wrap.style.display = 'flex';
+    if (btn) btn.style.display = '';
     chip.style.display = 'none';
   }
 }
@@ -440,6 +464,8 @@ async function googleLogout() {
 
 /* ---------------- wire up ---------------- */
 function init() {
+  initHeroCamera();
+  initLoginModal();
   filtersInit();
   $('btn-start').onclick = startFlow;
   $('btn-start2').onclick = startFlow;

@@ -465,3 +465,32 @@ body{
 
 /* ============ panda images stay crisp ============ */
 .hero-panda,.band-panda,.cta-panda,.hero-panda.mini{image-rendering:pixelated}
+
+/* ============ PANDOO brand frame (hay-style repeating border) ============ */
+.brand-frame{position:relative;overflow:hidden}
+.bf{position:absolute;z-index:3;font-family:"Press Start 2P",monospace;font-size:10px;letter-spacing:2px;
+  white-space:nowrap;overflow:hidden;pointer-events:none;
+  background:repeating-linear-gradient(45deg,#ffb52e 0 10px,#ff9a1f 10px 20px);
+  color:#7a2d00;display:flex;align-items:center;justify-content:center}
+.bf.t{top:0;left:0;right:0;height:20px}
+.bf.b{bottom:0;left:0;right:0;height:20px}
+.bf.l{left:0;top:0;bottom:0;width:20px;writing-mode:vertical-rl}
+.bf.r{right:0;top:0;bottom:0;width:20px;writing-mode:vertical-rl}
+.bf-pad{padding:36px 30px 30px;position:relative;z-index:1}
+.card.brand-frame{padding:0}
+.login-card{max-width:380px;width:100%;text-align:center}
+.login-panda{width:92px;height:auto;image-rendering:pixelated;animation:bob 2.6s ease-in-out infinite;margin-bottom:10px}
+.login-card .pixel-h{margin-bottom:16px}
+#google-btn-wrap{display:flex;justify-content:center;margin:6px 0 4px;min-height:40px}
+.terms-note{font-size:12px;color:#8a8a8a;font-weight:700;margin:12px 0 14px;line-height:1.6}
+.terms-note a{color:#2b59ff}
+.login-pill{background:#fff;border:3px solid #141414;border-radius:999px;padding:10px 26px;
+  font-family:inherit;font-weight:900;font-size:15px;cursor:pointer;box-shadow:0 4px 0 #141414;color:#232323}
+.login-pill:active{transform:translateY(3px);box-shadow:0 1px 0 #141414}
+
+/* ============ hero live camera ============ */
+.ap-camera{padding:0;position:relative;background:#111}
+#hero-preview{display:block;width:100%;height:300px;object-fit:cover;transform:scaleX(-1);background:#111}
+.ap-camera-off{padding:36px 22px}
+.ap-camera p{padding:14px 22px 18px}
+@media (min-width:900px){#hero-preview{height:340px}}

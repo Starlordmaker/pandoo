@@ -357,6 +357,7 @@ body{
 /* ============ DESKTOP: full-width landing, phone-framed app screens ============ */
 .wrap{width:100%}
 .hero-split{display:flex;flex-direction:column}
+
 @media (min-width:900px){
   #app{max-width:none}
   /* app screens (filters/finding/call/ended) stay phone-like, centered */
@@ -514,3 +515,30 @@ body{
 .ap-camera-off{padding:36px 22px}
 .ap-camera p{padding:14px 22px 18px}
 @media (min-width:900px){#hero-preview{height:clamp(430px,60vh,660px)}}
+
+/* ============ responsive hero: phones & tablets ============ */
+@media (max-width:599px){
+  /* compact hero: START stays reachable without a long scroll */
+  #hero-preview{height:230px}
+  .hero{padding:12px 12px 22px}
+  .hero-nav{margin-bottom:10px}
+  .ap-controls{padding:18px 14px 22px;gap:12px}
+  .filter-row .filter-pill{font-size:12px;padding:10px 6px}
+  .start-video-btn{font-size:16px;padding:14px 10px;white-space:nowrap}
+  .globe-wrap{width:124px;height:124px}
+  .globe-wrap .globe{font-size:74px}
+  .panda-run{width:52px;height:52px;margin-left:-26px;background-size:208px 52px;animation:run-cycle-sm .48s steps(4) infinite,panda-bounce .48s ease-in-out infinite}
+  .hero-info{margin-top:14px}
+  .hero-info h3{font-size:16px}
+}
+@keyframes run-cycle-sm{to{background-position:-208px 0}}
+@media (min-width:600px) and (max-width:899px){
+  /* tablet: landing goes wider, app screens stay phone-like + centered */
+  #app{max-width:none}
+  .screen{left:50%;right:auto;transform:translateX(-50%);width:480px;max-width:96vw}
+  .screen.landing{left:0;right:0;transform:none;width:100%;max-width:none}
+  #screen-home .hero .wrap{max-width:620px;margin:0 auto}
+  #hero-preview{height:340px}
+  .hero{padding:20px 20px 36px}
+  .ap-controls{padding:26px 24px 30px}
+}

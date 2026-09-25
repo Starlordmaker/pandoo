@@ -113,6 +113,30 @@ browser A ─┐                     ┌─ browser B
 4. **Scale-out note**: one Node process holds the queue in memory — fine for
    hundreds of concurrent users. Beyond that, shard by region or add Redis.
 
+## Android app (Capacitor wrapper)
+
+The Android app is a native shell around the live site (`https://pandoo.onrender.com`)
+built with [Capacitor](https://capacitorjs.com). Same website, same server — site
+updates go live in the app instantly, no rebuild needed. Camera/mic permissions are
+handled natively (`MainActivity.java` auto-grants WebView `getUserMedia` requests).
+
+**Build the APK on your Mac (needs Android Studio):**
+1. Install [Android Studio](https://developer.android.com/studio).
+2. `git pull` this repo, then open the `android/` folder in Android Studio
+   (it syncs Gradle automatically on first open).
+3. Menu → **Build → Build App Bundle(s) / APK(s) → Build APK(s)**.
+4. Find it at `android/app/build/outputs/apk/debug/app-debug.apk` — copy to your
+   phone and install (allow "install unknown apps" once).
+
+**Publish on Play Store:** Build → Generate Signed Bundle/APK → Android App
+Bundle (AAB), create a keystore when asked, upload the AAB in
+[Play Console](https://play.google.com/console) ($25 one-time developer fee).
+
+**Known limitation:** Google's "Sign in with Google" button does NOT work inside
+an Android WebView (Google blocks embedded browsers with `disallowed_useragent`).
+Facebook login and guest mode work fine. Fixing Google login needs the
+`@capacitor/browser` Custom-Tab flow — ask when you want it.
+
 ## Project structure
 
 ```

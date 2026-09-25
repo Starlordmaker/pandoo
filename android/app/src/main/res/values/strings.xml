@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pandoo</string>
+    <string name="title_activity_main">Pandoo</string>
+    <string name="package_name">app.pandoo.chat</string>
+    <string name="custom_url_scheme">app.pandoo.chat</string>
+</resources>

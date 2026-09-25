@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="img/pandoo-logo.png">
+<link rel="icon" type="image/png" href="img/pandoo-face.png">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -46,7 +46,11 @@
           <div class="mode-tabs">
             <button class="on" id="tab-solo">Solo</button><button id="tab-squad">Squad</button>
           </div>
-          <div class="globe">🌍</div>
+          <div class="globe-wrap" aria-hidden="true">
+            <div class="orbit-ring"></div>
+            <div class="globe">🌍</div>
+            <div class="orbit"><div class="panda-run"></div></div>
+          </div>
           <div class="online-line"><span class="dot"></span>ONLINE&nbsp;<span class="online-count">0</span></div>
           <div class="filter-row">
             <button id="btn-filters" class="filter-pill">👥&nbsp;<span id="filters-summary">Anyone</span></button>

@@ -1,4 +1,4 @@
-/* Strango client — random 1-on-1 video chat.
+/* Pandoo client — random 1-on-1 video chat.
  * Signaling over WebSocket (/ws), media peer-to-peer via WebRTC.
  * Chat translation via MyMemory free API (graceful fallback to original text).
  */
@@ -44,11 +44,11 @@ function toast(msg, ms = 2200) {
 /* ---------------- filters ---------------- */
 function loadFilters() {
   try {
-    const f = JSON.parse(localStorage.getItem('strango-filters') || '{}');
+    const f = JSON.parse(localStorage.getItem('pandoo-filters') || '{}');
     return { gender: f.gender || 'other', lookingFor: f.lookingFor || 'any', region: f.region || 'any', interests: f.interests || [] };
   } catch { return { gender: 'other', lookingFor: 'any', region: 'any', interests: [] }; }
 }
-function saveFilters() { localStorage.setItem('strango-filters', JSON.stringify(filters)); }
+function saveFilters() { localStorage.setItem('pandoo-filters', JSON.stringify(filters)); }
 function segInit(id, key) {
   const el = $(id);
   el.querySelectorAll('button').forEach(b => {

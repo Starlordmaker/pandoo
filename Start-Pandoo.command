@@ -1,9 +1,9 @@
 #!/bin/bash
-# Strango — double-click to start locally on Mac
+# Pandoo — double-click to start locally on Mac
 cd "$(dirname "$0")"
 
 echo "==============================="
-echo "  STRANGO — starting locally..."
+echo "  PANDOO — starting locally..."
 echo "==============================="
 
 if ! command -v node >/dev/null 2>&1; then

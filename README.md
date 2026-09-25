@@ -1,4 +1,4 @@
-# Strango — Random 1-on-1 Video Chat (Hay/Monkey style)
+# Pandoo — Random 1-on-1 Video Chat (Hay/Monkey style)
 
 A complete, working random video-chat app: strangers get matched 1-on-1,
 video goes **peer-to-peer via WebRTC**, and a small Node.js server handles
@@ -88,7 +88,7 @@ Run tests: start the server in one terminal (`npm start`), then
 
 ## Before real launch (honest checklist)
 
-- [ ] Replace the "Strango" name/logo with your brand (`client/index.html`).
+- [ ] Replace the "Pandoo" name/logo with your brand (`client/index.html`).
 - [ ] Add a TURN server (see above) — otherwise mobile-data users can't connect.
 - [ ] Real moderation: this logs reports; production needs AI image moderation
       (e.g. Hive, Sightengine) + human review + blocklists.

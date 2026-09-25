@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: strango
+    name: pandoo
     runtime: node
     plan: free
     buildCommand: npm install

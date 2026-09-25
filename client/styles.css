@@ -400,3 +400,44 @@ body{
 .foot-links{margin:0 0 6px}
 .foot-links a{color:#9fb4ff;text-decoration:none;font-weight:700}
 .foot-links a:hover{text-decoration:underline}
+
+/* ============ app screens: royal blue + panda watermark (zero white) ============ */
+#screen-filters,#screen-finding,#screen-ended{
+  background-color:#2b59ff;
+  background-image:radial-gradient(rgba(255,255,255,.10) 2.5px,transparent 3px);
+  background-size:30px 30px;
+}
+#screen-filters::before,#screen-finding::before,#screen-ended::before{
+  content:"";position:absolute;right:-46px;bottom:-34px;width:290px;height:290px;
+  background:url('img/pandoo-mascot.png') no-repeat center/contain;
+  opacity:.16;pointer-events:none;
+}
+#screen-filters .card,.finding-inner,.ended-inner{position:relative;z-index:1}
+#screen-finding .pixel-h,#screen-ended .pixel-h{color:#fff;text-shadow:3px 3px 0 #141414}
+#screen-finding .muted-dark,#screen-ended .muted-dark{color:#dbe4ff}
+
+/* ============ hero: panda in background + floating pixel elements ============ */
+.hero{position:relative;overflow:hidden}
+.hero-decor{position:absolute;inset:0;pointer-events:none;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero-panda{position:absolute;right:-24px;bottom:6px;width:170px;opacity:.95;
+  animation:bob 3.2s ease-in-out infinite;filter:drop-shadow(4px 4px 0 rgba(0,0,0,.25))}
+.hero-panda.mini{left:-20px;top:12%;width:90px;opacity:.5;animation-delay:1.2s}
+.px-plus{position:absolute;width:8px;height:8px}
+.px-plus::after{content:"";position:absolute;width:8px;height:8px;background:#7bc845;
+  box-shadow:0 -16px #7bc845,0 -8px #7bc845,0 8px #7bc845,0 16px #7bc845,
+  -16px 0 #7bc845,-8px 0 #7bc845,8px 0 #7bc845,16px 0 #7bc845}
+.fh1{top:30%;left:9%;animation:bob 2.6s ease-in-out infinite}
+.fh2{bottom:14%;left:44%;transform:scale(.6);animation:bob 3s ease-in-out infinite}
+.fs1{top:10%;right:38%;animation:bob 2.2s ease-in-out infinite}
+.fs2{bottom:20%;right:6%;transform:scale(.7);animation:bob 2.8s ease-in-out infinite}
+.fp1{top:48%;left:2%;animation:bob 3.4s ease-in-out infinite}
+.fp2{top:8%;left:52%;transform:scale(.7);animation:bob 2.4s ease-in-out infinite}
+.pixel-band{position:relative;overflow:hidden}
+.band-panda{position:absolute;right:4%;top:50%;width:110px;transform:translateY(-50%) rotate(8deg);
+  opacity:.9;animation:bob 3s ease-in-out infinite;pointer-events:none}
+@media (min-width:900px){
+  .hero-panda{width:250px;right:2%;bottom:0}
+  .hero-panda.mini{width:120px;left:2%}
+  .band-panda{width:150px;right:6%}
+}

@@ -527,7 +527,15 @@ function init() {
   initLoginModal();
   filtersInit();
   $('btn-start').onclick = startFlow;
-  $('btn-start2').onclick = startFlow;
+  const bs2 = $('btn-start2'); if (bs2) bs2.onclick = startFlow;
+  // corner menu box
+  const menuBtn = $('btn-menu'), menuBox = $('menu-box');
+  if (menuBtn && menuBox) {
+    menuBtn.addEventListener('click', e => { e.stopPropagation(); menuBox.classList.toggle('hidden'); });
+    document.addEventListener('click', e => {
+      if (!menuBox.classList.contains('hidden') && !menuBox.contains(e.target)) menuBox.classList.add('hidden');
+    });
+  }
   $('tab-squad').onclick = () => toast('Squad mode coming soon!');
   $('tab-solo').onclick = () => { $('tab-solo').classList.add('on'); $('tab-squad').classList.remove('on'); };
   $('tab-squad').addEventListener('click', () => { $('tab-squad').classList.add('on'); $('tab-solo').classList.remove('on'); });
